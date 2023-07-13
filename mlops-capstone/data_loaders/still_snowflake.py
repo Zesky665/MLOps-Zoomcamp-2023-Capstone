@@ -29,28 +29,31 @@ def load_data_from_api(*args, **kwargs):
             with open(target, 'wb') as output:
                 shutil.copyfileobj(r.raw, output)
     
-    extract_data(target, *args)
+    data_path = extract_data(target, *args)
 
-    return target
+    return data_path
 
 def extract_data(target, *args):
-    if not os.path.exists("downloads/dataset"):
-        os.mkdir("downloads/dataset")
+    data_path = "downloads/dataset"
+    if not os.path.exists(data_path):
+        os.mkdir(data_path)
     
-    if os.path.isfile("downloads/dataset/data/batch_1/000000.jpg"):
+    if os.path.isfile(f'{data_path}data/batch_1/000000.jpg'):
         print("Files already extracted")
     else:
         with ZipFile(target, 'r') as zObject:
         
             # Extracting all the members of the zip 
             # into a specific location.
-            zObject.extractall(path="downloads/dataset")
+            zObject.extractall(path=data_path)
     print("Extraction finished")
+
+    return data_path
 
 @test
 def test_output(output, *args) -> None:
     """
     Template code for testing the output of the block.
     """
-    download_success = os.path.isfile(output)
+    download_success = os.path.isfile(f'{output}/data/batch_1/000000.jpg')
     assert download_success is not False, 'The output is undefined'

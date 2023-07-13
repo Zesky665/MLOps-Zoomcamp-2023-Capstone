@@ -2,17 +2,49 @@ blocks:
 - all_upstream_blocks_executed: true
   color: null
   configuration: {}
-  downstream_blocks: []
+  downstream_blocks:
+  - wispy_breeze
   executor_config: null
   executor_type: local_python
   has_callback: false
   language: python
   name: still snowflake
   retry_config: null
-  status: executed
+  status: updated
   type: data_loader
   upstream_blocks: []
   uuid: still_snowflake
+- all_upstream_blocks_executed: false
+  color: null
+  configuration: {}
+  downstream_blocks:
+  - small_glitter
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: wispy breeze
+  retry_config: null
+  status: updated
+  type: transformer
+  upstream_blocks:
+  - still_snowflake
+  uuid: wispy_breeze
+- all_upstream_blocks_executed: false
+  color: null
+  configuration: {}
+  downstream_blocks: []
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: small glitter
+  retry_config: null
+  status: not_executed
+  type: data_exporter
+  upstream_blocks:
+  - wispy_breeze
+  uuid: small_glitter
 callbacks: []
 conditionals: []
 data_integration: null
@@ -25,6 +57,6 @@ name: sparkling thunder
 notification_config: {}
 spark_config: {}
 type: python
-updated_at: '2023-07-11 10:10:34'
+updated_at: '2023-07-11 13:13:23'
 uuid: sparkling_thunder
 widgets: []
