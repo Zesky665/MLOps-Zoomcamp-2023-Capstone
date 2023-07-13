@@ -1,2 +1,4 @@
 mlops-cap/*
 downloads/*
+env/config.yaml
+mlops-capstone/env/config.yaml

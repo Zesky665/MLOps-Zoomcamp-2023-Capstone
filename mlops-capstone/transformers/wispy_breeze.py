@@ -31,9 +31,10 @@ def transform(data_dir, *args, **kwargs):
     annotations_file = transform_annotation(data_dir)
     test_file = create_annotation_files(data_dir, annotations_file)
     file_processing(data_dir)
-    convert_COCO_to_Torch(data_dir, annotations_file)
+    torch_train_dir = convert_COCO_to_Torch(data_dir, annotations_file)
+    taco_torch_zip_file_path = zip_torch_dataset(torch_train_dir)
 
-    return data_dir
+    return taco_torch_zip_file_path
 
 def transform_annotation(data_dir):
     source_annonation_path = f'{data_dir}/data/annotations.json'
@@ -292,7 +293,21 @@ def convert_COCO_to_Torch(output_path, annotations_file, use_segments=True):
                 manifest["images"] += [file_name]
             y = json.dump(manifest, f)
         print("Finish")
+        
+    return train_dir
 
+def zip_torch_dataset(train_dir):
+    dataset_path = "datasets/taco-torch-dataset.zip"
+    if not os.path.exists("datasets/"):
+        os.mkdir("datasets/")
+        
+    if os.path.isfile(dataset_path):
+        print("Already exists")
+    else:
+        shutil.make_archive('datasets/taco-torch-dataset', 'zip', train_dir)
+        print("Taco Torch Dataset archive created.")
+        
+    return dataset_path
 
 @test
 def test_output(output, *args) -> None:
