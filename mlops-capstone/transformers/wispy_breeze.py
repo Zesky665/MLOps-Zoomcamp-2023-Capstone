@@ -218,14 +218,14 @@ def convert_COCO_to_Torch(output_path, annotations_file, use_segments=True):
         print('extract the json :', annotations_file)
 
         # write _darknet.labels, which holds names of all classes (one class per line)
-        label_file = os.path.join(output_path, "_darknet.labels.txt")
+        label_file = os.path.join(train_dir, "_darknet.labels.txt")
         with open(label_file, "w") as f:
             for image in json_data["images"]:
                 img_id = image["id"]
                 #img_name = image["file_name"]
                 img_name = os.path.basename(image["file_name"])
                 json_images = os.path.dirname(annotations_file)+"/images/"+img_name
-                target = output_path+"/"+img_name
+                target = train_dir+"/"+img_name
                 shutil.copyfile(json_images, target) 
                 img_width = image["width"]
                 img_height = image["height"]
@@ -236,7 +236,7 @@ def convert_COCO_to_Torch(output_path, annotations_file, use_segments=True):
             
                 anno_in_image = [anno for anno in json_data["annotations"] if anno["image_id"] == img_id]
                 #anno_txt = os.path.join(output_path, img_name.split(".")[0] + ".txt")
-                anno_txt = os.path.join(output_path, img_name.replace(".jpg",".txt"))
+                anno_txt = os.path.join(train_dir, img_name.replace(".jpg",".txt"))
 
                 h, w, f = image['height'], image['width'], image['file_name']
                 bboxes = []
